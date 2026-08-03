@@ -1,0 +1,27 @@
+# dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# env files - NEVER push API keys
+.env
+.env.local
+.env.*.local
+
+# build outputs
+client/dist/
+client/.vite/
+server/dist/
+
+# logs
+*.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

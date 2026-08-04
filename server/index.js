@@ -14,7 +14,7 @@ const app = express()
 app.use(cors({
   origin: [
     "http://localhost:5173", // vite dev
-    "https://caliber.vercel.app" // your vercel url
+    "https://caliberx.vercel.app" // your vercel url
   ],
   credentials: true
 }))

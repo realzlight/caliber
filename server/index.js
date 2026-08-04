@@ -1,6 +1,5 @@
 import express from "express"
 import multer from "multer"
-import cors from "cors"
 import Tesseract from "tesseract.js"
 import { GoogleGenerativeAI } from "@google/generative-ai"
 import dotenv from "dotenv"

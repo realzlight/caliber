@@ -6,7 +6,20 @@ import { GoogleGenerativeAI } from "@google/generative-ai"
 import dotenv from "dotenv"
 
 dotenv.config()
+// server/index.js
+import cors from 'cors'
+import express from 'express'
+const app = express()
 
+app.use(cors({
+  origin: [
+    "http://localhost:5173", // vite dev
+    "https://caliber.vercel.app" // your vercel url
+  ],
+  credentials: true
+}))
+
+app.use(express.json())
 const app = express()
 const PORT = 5000
 
@@ -165,6 +178,6 @@ Stay NON CHALANT and CHILL, DONT SAY ANYTHING ILLEGAL OTHERWISE GO ALL OUT NO HO
 })
 
 app.listen(PORT, () => {
-  console.log(`Caliber server running on http://localhost:${PORT}`)
+  console.log(`Caliber server running on ${PORT}`)
 })
 

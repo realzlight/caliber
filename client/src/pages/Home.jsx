@@ -94,8 +94,10 @@ export default function Home() {
     setCopiedIndex(i)
     setTimeout(() => setCopiedIndex(null), 1500)
   }
+  
+ const API = import.meta.env.VITE_API_URL || '' // '' = use proxy in dev
 
-  const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault()
     if (!file) return alert("Upload a screenshot first")
 
@@ -108,7 +110,7 @@ export default function Home() {
     if (mode === 'roast') formData.append('roastLevel', roastLevel)
 
     try {
-      const res = await axios.post('/api/upload', formData)
+      const res = await axios.post(`${API}/api/upload`, formData)
       setReplies(res.data.replies)
       stampTime()
     } catch (err) {

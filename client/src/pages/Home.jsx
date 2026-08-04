@@ -43,16 +43,29 @@ const CheckIcon = () => (
   </svg>
 )
 
+const ChevronIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M9 6l6 6-6 6" />
+  </svg>
+)
+
+const CloseIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M18 6L6 18M6 6l12 12" />
+  </svg>
+)
+
 const MODES = [
-  { id: 'safe', label: 'Safe', Icon: ShieldIcon },
-  { id: 'spice', label: 'Spice', Icon: FlameIcon },
-  { id: 'roast', label: 'Roast', Icon: MicIcon },
+  { id: 'safe', label: 'Safe', desc: 'Clean, respectful replies', Icon: ShieldIcon },
+  { id: 'spice', label: 'Spice', desc: 'Bold and flirty, adjustable heat', Icon: FlameIcon },
+  { id: 'roast', label: 'Roast', desc: 'Savage comebacks, adjustable intensity', Icon: MicIcon },
 ]
 
 export default function Home() {
   const [mode, setMode] = useState('safe')
   const [spiceLevel, setSpiceLevel] = useState(5)
   const [roastLevel, setRoastLevel] = useState(5)
+  const [sheetOpen, setSheetOpen] = useState(false)
 
   const [file, setFile] = useState(null)
   const [dragActive, setDragActive] = useState(false)
@@ -60,6 +73,8 @@ export default function Home() {
   const [copiedIndex, setCopiedIndex] = useState(null)
   const [replyTime, setReplyTime] = useState('')
   const [loading, setLoading] = useState(false)
+
+  const activeMode = MODES.find(m => m.id === mode)
 
   const handleFile = (f) => {
     if (f && f.type.startsWith('image/')) setFile(f)
@@ -124,21 +139,17 @@ export default function Home() {
           <p>Upload a screenshot. Pick your tone. Done.</p>
         </header>
 
-        <div className="mode-grid">
-          {MODES.map(({ id, label, Icon }) => (
-            <button
-              key={id}
-              type="button"
-              className={`mode-card mode-${id} ${mode === id ? 'active' : ''}`}
-              onClick={() => setMode(id)}
-            >
-              <span className="mode-icon"><Icon /></span>
-              <span className="mode-name">{label}</span>
-            </button>
-          ))}
-        </div>
-
         <form onSubmit={handleSubmit} className="form">
+          <button
+            type="button"
+            className={`mode-capsule capsule-${mode}`}
+            onClick={() => setSheetOpen(true)}
+          >
+            <span className="capsule-icon"><activeMode.Icon /></span>
+            <span className="capsule-text">{activeMode.label}</span>
+            <span className="capsule-chevron"><ChevronIcon /></span>
+          </button>
+
           <label
             className={`upload-zone ${dragActive ? 'drag-active' : ''} ${file ? 'has-file' : ''}`}
             onDragOver={(e) => { e.preventDefault(); setDragActive(true) }}
@@ -200,7 +211,7 @@ export default function Home() {
           </div>
         )}
 
-{!loading && replies.length > 0 && (
+        {!loading && replies.length > 0 && (
           <div className="replies-container fade-in">
             {replies.map((r, i) => (
               <div className="bubble-wrap" key={i}>
@@ -225,6 +236,39 @@ export default function Home() {
           </div>
         )}
       </div>
+
+      {sheetOpen && (
+        <div className="sheet-overlay" onClick={() => setSheetOpen(false)}>
+          <div className="sheet-panel" onClick={(e) => e.stopPropagation()}>
+            <div className="sheet-handle" />
+            <div className="sheet-header">
+              <button type="button" className="sheet-close" onClick={() => setSheetOpen(false)}>
+                <CloseIcon />
+              </button>
+              <h2>Select mode</h2>
+              <span className="sheet-spacer" />
+            </div>
+
+            <div className="sheet-list">
+              {MODES.map(({ id, label, desc, Icon }) => (
+                <button
+                  key={id}
+                  type="button"
+                  className={`sheet-item ${mode === id ? 'selected' : ''}`}
+                  onClick={() => { setMode(id); setSheetOpen(false) }}
+                >
+                  <span className="sheet-item-icon"><Icon /></span>
+                  <span className="sheet-item-text">
+                    <span className="sheet-item-label">{label}</span>
+                    <span className="sheet-item-desc">{desc}</span>
+                  </span>
+                  {mode === id && <span className="sheet-check"><CheckIcon /></span>}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

@@ -57,7 +57,7 @@ const CloseIcon = () => (
 
 const MODES = [
   { id: 'safe', label: 'Safe', desc: 'Clean, respectful replies', Icon: ShieldIcon },
-  { id: 'spice', label: 'Spice', desc: 'Bold and flirty, adjustable heat', Icon: FlameIcon },
+  { id: 'spice', label: 'Rizz', desc: 'Bold and flirty, adjustable heat', Icon: FlameIcon },
   { id: 'roast', label: 'Roast', desc: 'Savage comebacks, adjustable intensity', Icon: MicIcon },
 ]
 
@@ -128,15 +128,15 @@ export default function Home() {
       <nav className="navbar">
         <div className="nav-brand">
           <span className="nav-mark">C</span>
-          Caliber
+          CALIBER
         </div>
         <span className="nav-badge">Beta</span>
       </nav>
 
       <div className="content">
         <header className="header">
-          <h1>Get the perfect reply</h1>
-          <p>Upload a screenshot. Pick your tone. Done.</p>
+          <h1>Inherit the Impactful reply</h1>
+          <p>Upload a screenshot. Pick Mode. Let Caliber Slay.</p>
         </header>
 
         <form onSubmit={handleSubmit} className="form">
@@ -168,10 +168,13 @@ export default function Home() {
           </label>
 
           <div className="controls-wrap">
+
+
+
             {(mode === 'spice' || mode === 'roast') && (
               <div className={`slider-section slider-${mode} fade-in`} key={mode}>
                 <div className="slider-label-row">
-                  <span className="slider-label">{mode === 'spice' ? 'Spice Meter' : 'Roast Meter'}</span>
+                  <span className="slider-label">{mode === 'spice' ? 'Rizz Meter' : 'Roast Meter'}</span>
                   <span className="slider-value">{level}</span>
                 </div>
                 <input

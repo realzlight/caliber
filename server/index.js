@@ -5,6 +5,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai"
 import dotenv from "dotenv"
 import cors from 'cors'
 dotenv.config()
+console.log("KEY LOADED:", process.env.GEMINI_API_KEY ? process.env.GEMINI_API_KEY.slice(0,6) + "..." : "MISSING")
 
 const app = express() // <-- moved here
 const PORT = process.env.PORT || 5000 // Railway needs this

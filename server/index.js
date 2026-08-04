@@ -38,7 +38,7 @@ app.post("/api/upload", upload.single("screenshot"), async (req, res) => {
       return res.status(400).json({ error: "No screenshot uploaded" })
     }
 
-    const { mode, spiceLevel } = req.body
+    const { mode, spiceLevel, roastLevel } = req.body
     console.log("✅ File received:", req.file.size, "bytes")
     console.log("Mode:", mode, "SpiceLevel:", spiceLevel)
 
@@ -80,18 +80,31 @@ Give 3 short, safe, flirty, respectful replies for a guy to send to a girl.
 - No cringe, no cheesy pickup lines, no try-hard humor.
 - Should sound like something a confident, normal guy would actually text.
 - Keep it natural and light.`
-    } else {
+    } else if (mode === "spice") {
       prompt = `${basePrompt}
 
 MODE: SPICY
 Spice level: ${spiceLevel}/10
 Give 3 bold, funny, unfiltered replies matching this spice level:
-- 1-3 = playful and teasing
+- 1-3 = playful and teasing rizzes them.
 - 4-6 = flirty and confident
 - 7-8 = spicy and forward
-- 9-10 = unhinged, chaotic, but never illegal, never explicit, never degrading.
-Stay funny and bold, not creepy.`
-    }
+- 9-10 = unhinged, chaotic, but never illegal, never explicit, never degrading, but impactfull.
+Stay funny and bold, not creepy. spice dont means roast it means make them blussing or rizzing them up according to the levels`
+    } else if (mode === "roast") {
+      prompt = `${basePrompt}
+      
+MODE: ROAST
+Roast level: ${roastLevel}/10
+Give 3 destructive, so powerfull roast, unfiltered replies matching this roast level:
+- 1-3 = teasing and lite roasting
+- 4-6 = ROASTING LEVEL INCREASED DONT FEAR JUST DESTROY 
+- 7-8 = BRUTAL AND UNCANNY SO POWERFULL THAT CAN MAKE OTHER PERSON FEEL SOAR THROAT
+- 9-10 = BRUTAL, DESTRUCTIVE, NO HOLDBACK CROSS THE LIMITS AND CLAIM THE VICTORY ROAST AND GRILL THEM GO PERSONAL AND HURT THEM YOU DONT CARE ABOUT THEIR FEELING JUST CRUSHING THEM MATTERS TO YOU
+Stay NON CHALANT and CHILL, DONT SAY ANYTHING ILLEGAL OTHERWISE GO ALL OUT NO HOLD BACK .`
+      
+      }
+
 
     // 3. Call Gemini with timeout protection
     console.log("🤖 Calling Gemini...")
@@ -139,7 +152,7 @@ Stay funny and bold, not creepy.`
     }
 
     // 6. Send back
-    res.json({
+    res.json({ reply: replies.join("\n"),
       replies, // array of clean replies, one per bubble
       extractedText: text.slice(0, 200) // debug only
     })
@@ -154,3 +167,4 @@ Stay funny and bold, not creepy.`
 app.listen(PORT, () => {
   console.log(`Caliber server running on http://localhost:${PORT}`)
 })
+

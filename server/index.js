@@ -5,7 +5,9 @@ import { GoogleGenerativeAI } from "@google/generative-ai"
 import dotenv from "dotenv"
 import cors from 'cors'
 dotenv.config()
-// server/index.js
+
+const app = express() // <-- moved here
+const PORT = process.env.PORT || 5000 // Railway needs this
 
 app.use(cors({
   origin: [
@@ -16,12 +18,11 @@ app.use(cors({
 }))
 
 app.use(express.json())
-const app = express()
-const PORT = 5000
 
-app.use(express.json())
 
-// Memory storage - nothing saved to disk
+
+
+
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 5 * 1024 * 1024 } // 5MB max

@@ -3,12 +3,9 @@ import multer from "multer"
 import Tesseract from "tesseract.js"
 import { GoogleGenerativeAI } from "@google/generative-ai"
 import dotenv from "dotenv"
-
+import cors from 'cors'
 dotenv.config()
 // server/index.js
-import cors from 'cors'
-import express from 'express'
-const app = express()
 
 app.use(cors({
   origin: [
@@ -22,7 +19,6 @@ app.use(express.json())
 const app = express()
 const PORT = 5000
 
-app.use(cors())
 app.use(express.json())
 
 // Memory storage - nothing saved to disk

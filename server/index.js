@@ -173,7 +173,7 @@ Stay NON CHALANT and CHILL, DONT SAY ANYTHING ILLEGAL OTHERWISE GO ALL OUT NO HO
   }
 })
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Caliber server running on ${PORT}`)
 })
 

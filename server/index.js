@@ -34,7 +34,7 @@ if (!process.env.GEMINI_API_KEY) {
   console.error("❌ GEMINI_API_KEY is missing from .env file")
   process.exit(1)
 }
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY)
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY?.trim())
 
 // Health check
 app.get("/", (req, res) => {
